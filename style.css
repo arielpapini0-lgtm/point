@@ -1,258 +1,3 @@
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #111;
-  color: #fff;
-}
-
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
-  text-align: center;
-  position: relative;
-}
-
-/* Botón minimalista para cambiar fondo */
-.bg-minimal {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 20;
-  animation: fadeIn 1s ease-out;
-}
-
-#bgUpload {
-  display: none;
-}
-
-.bg-minimal label {
-  font-size: 1.8em;
-  cursor: pointer;
-  color: #00e5ff;
-  text-shadow: 0 0 5px #00e5ff, 0 0 10px #00e5ff;
-  transition: transform 0.3s ease, text-shadow 0.3s ease;
-}
-
-.bg-minimal label:hover {
-  transform: scale(1.2);
-  text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff;
-}
-
-/* Timer principal */
-header {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-#mainTimer {
-  font-size: 4em;
-  font-weight: bold;
-  color: #00e5ff;
-  text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff;
-  margin-bottom: 10px;
-}
-
-.timer-controls {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.timer-controls button {
-  font-size: 1.2em;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: #333;
-  color: #fff;
-  transition: background 0.2s ease;
-}
-
-.timer-controls button:hover {
-  background-color: #555;
-}
-
-/* Timer de descanso */
-#breakTimer {
-  font-size: 2.5em;
-  font-weight: bold;
-  color: #ffeb3b;
-  text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffeb3b;
-  margin-bottom: 10px;
-}
-
-.break-timer {
-  width: 30%;
-  padding: 10px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 10px;
-  box-shadow: 0 0 10px #222;
-}
-
-/* Paneles rojo y azul */
-main {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 20px;
-}
-
-.scoreboard {
-  width: 30%;
-  padding: 15px;
-  border-radius: 10px;
-  background: rgba(0, 0, 0, 0.901);
-  box-shadow: 0 0 10px #000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.red {
-  border: 4px solid #f70000;
-}
-
-.blue {
-  border: 4px solid #005eff;
-}
-
-/* Marcadores */
-.counter {
-  margin: 10px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.counter.big div {
-  font-size: 4em;
-}
-
-.counter.small div {
-  font-size: 2em;
-}
-
-.counter button {
-  font-size: 1.5em;
-  margin: 3px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 6px;
-  background-color: #222;
-  color: #fff;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.counter button:hover {
-  transform: scale(1.1);
-  background-color: #444;
-}
-
-.counter div {
-  margin: 5px 0;
-}
-
-/* Etiquetas */
-.label {
-  font-size: 1em;
-  margin-bottom: 5px;
-  color: #ccc;
-}
-
-/* Faltas y salidas alineadas horizontalmente */
-.bottom-row {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 20px;
-}
-
-.counter-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 45%;
-}
-
-/* Firma del dojo */
-footer {
-  margin-top: 40px;
-  text-align: center;
-}
-
-.watermark {
-  font-size: 0.9em;
-  color: #888;
-  opacity: 0.6;
-  margin-bottom: 10px;
-}
-
-.watermark-img {
-  width: 150px;
-  opacity: 0.3;
-  display: block;
-  margin: 0 auto;
-}
-
-/* Animación de entrada */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Animación de impacto */
-.flash {
-  animation: flash 0.3s ease;
-}
-
-@keyframes flash {
-  0% { transform: scale(1); background-color: transparent; }
-  50% { transform: scale(1.1); background-color: rgba(255,255,255,0.2); }
-  100% { transform: scale(1); background-color: transparent; }
-}
-.led-toggle {
-  font-size: 1.5em;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  background-color: #111;
-  color: #00e5ff;
-  text-shadow: 0 0 5px #00e5ff, 0 0 10px #00e5ff;
-  cursor: pointer;
-  transition: transform 0.3s ease, text-shadow 0.3s ease;
-}
-
-.led-toggle:hover {
-  transform: scale(1.2);
-  text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff;
-}
-.time-selector {
-  margin-top: 10px;
-}
-
-#mainTimeSelect {
-  font-size: 1.2em;
-  padding: 6px 12px;
-  border-radius: 6px;
-  background-color: #111;
-  color: #00e5ff;
-  border: none;
-  text-shadow: 0 0 5px #00e5ff;
-  box-shadow: 0 0 10px #00e5ff20;
-  cursor: pointer;
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
-}
-
-#mainTimeSelect:hover {
-  box-shadow: 0 0 15px #00e5ff60;
-  transform: scale(1.05);
-}
 /* RESET GENERAL */
 * {
   box-sizing: border-box;
@@ -268,60 +13,57 @@ body {
 }
 
 /* CONTENEDOR PRINCIPAL */
-.container {
-  max-width: 1200px;
-  margin: auto;
-}
-
-/* PANEL DE PUNTUACIÓN */
 .scoreboard {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
+  justify-content: space-between;
   gap: 2vw;
   margin-bottom: 2vh;
 }
 
+/* PANEL INDIVIDUAL */
 .scoreboard .red,
 .scoreboard .blue {
   flex: 1 1 45%;
+  min-width: 280px;
   background-color: #222;
   padding: 2vh;
   border-radius: 10px;
+  box-sizing: border-box;
 }
 
+/* NOMBRE DEL COMPETIDOR */
 .scoreboard h2 {
   font-size: 1.6rem;
   text-align: center;
   margin-bottom: 1vh;
 }
 
+/* GRUPOS DE CONTROLES */
 .points, .fouls, .exits {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
   margin-top: 1vh;
 }
 
-.points div, .fouls div, .exits div {
-  font-size: 1.2rem;
-}
-
-/* BOTONES */
-button {
+/* BOTONES DE FLECHAS */
+button.up, button.down {
+  font-size: 1.5rem;
   padding: 1vh 2vw;
-  font-size: 1rem;
-  margin: 1vh 0.5vw;
-  border: none;
-  border-radius: 5px;
+  min-width: 60px;
+  margin: 0.5vh;
+  border-radius: 8px;
   background-color: #444;
   color: white;
+  border: none;
 }
 
-button:hover {
+button.up:hover, button.down:hover {
   background-color: #666;
 }
 
-/* TEMPORIZADORES */
+/* TEMPORIZADOR */
 .timer {
   font-size: 2rem;
   text-align: center;
@@ -332,6 +74,7 @@ button:hover {
 @media (max-width: 600px) {
   .scoreboard {
     flex-direction: column;
+    align-items: center;
   }
 
   .scoreboard .red,
@@ -340,9 +83,15 @@ button:hover {
     margin-bottom: 2vh;
   }
 
-  button {
-    width: 100%;
-    font-size: 1.1rem;
+  .points, .fouls, .exits {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  button.up, button.down {
+    width: 40%;
+    font-size: 1.8rem;
   }
 
   .timer {
