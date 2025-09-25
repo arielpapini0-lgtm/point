@@ -253,3 +253,99 @@ footer {
   box-shadow: 0 0 15px #00e5ff60;
   transform: scale(1.05);
 }
+/* RESET GENERAL */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #111;
+  color: #fff;
+  padding: 2vh 4vw;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* PANEL DE PUNTUACIÓN */
+.scoreboard {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2vw;
+  margin-bottom: 2vh;
+}
+
+.scoreboard .red,
+.scoreboard .blue {
+  flex: 1 1 45%;
+  background-color: #222;
+  padding: 2vh;
+  border-radius: 10px;
+}
+
+.scoreboard h2 {
+  font-size: 1.6rem;
+  text-align: center;
+  margin-bottom: 1vh;
+}
+
+.points, .fouls, .exits {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1vh;
+}
+
+.points div, .fouls div, .exits div {
+  font-size: 1.2rem;
+}
+
+/* BOTONES */
+button {
+  padding: 1vh 2vw;
+  font-size: 1rem;
+  margin: 1vh 0.5vw;
+  border: none;
+  border-radius: 5px;
+  background-color: #444;
+  color: white;
+}
+
+button:hover {
+  background-color: #666;
+}
+
+/* TEMPORIZADORES */
+.timer {
+  font-size: 2rem;
+  text-align: center;
+  margin: 2vh 0;
+}
+
+/* MEDIA QUERIES PARA MÓVILES */
+@media (max-width: 600px) {
+  .scoreboard {
+    flex-direction: column;
+  }
+
+  .scoreboard .red,
+  .scoreboard .blue {
+    width: 100%;
+    margin-bottom: 2vh;
+  }
+
+  button {
+    width: 100%;
+    font-size: 1.1rem;
+  }
+
+  .timer {
+    font-size: 1.5rem;
+  }
+}
