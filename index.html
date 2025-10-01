@@ -4,115 +4,86 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dojo Chronos</title>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#111">
+  <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <!-- Botón minimalista para cambiar fondo -->
-    <div class="bg-minimal">
-      <label for="bgUpload" title="Cambiar fondo">📁</label>
-      <input type="file" id="bgUpload" accept="image/*" />
+  <div class="tabs">
+    <button onclick="mostrarSeccion('organizacion')">📋 Organización</button>
+    <button onclick="window.open('combate.html', '_blank')">⚔️ Combate</button>
+  </div>
+
+  <div id="organizacion" class="seccion">
+    <section id="torneo" class="torneo-section">
+      <h2>Modo Torneo 🏆</h2>
+
+      <section id="registro" class="torneo-section">
+        <h2>📋 Registro de Competidores</h2>
+        <div class="competitor-form">
+          <input type="text" id="nombre" placeholder="Nombre" />
+          <input type="text" id="escuela" placeholder="Escuela" />
+          <select id="edad">
+            <option value="infantil">Infantil</option>
+            <option value="juvenil">Juvenil</option>
+            <option value="adulto">Adulto</option>
+          </select>
+          <select id="tecnica">
+            <option value="kyuA">Kyu A</option>
+            <option value="kyuB">Kyu B</option>
+            <option value="cintosNegros">Cintos Negros</option>
+          </select>
+          <select id="peso">
+            <option value="-60">-60 kg</option>
+            <option value="-65">-65 kg</option>
+            <option value="-70">-70 kg</option>
+            <option value="-75">-75 kg</option>
+            <option value="-80">-80 kg</option>
+            <option value="-85">-85 kg</option>
+            <option value="-90">-90 kg</option>
+            <option value="+90">+90 kg</option>
+          </select>
+          <button id="agregar">➕ Agregar</button>
+        </div>
+
+        <table id="tabla">
+          <thead>
+            <tr><th>Nombre</th><th>Escuela</th><th>Edad</th><th>Técnica</th><th>Peso</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <button id="sortearLlave" style="display:none;">🎲 Sortear y Generar Llave</button>
+      </section>
+
+      <div id="bracketDisplay" class="bracket-container"></div>
+
+      <div id="thirdPlaceMatch" class="third-place hidden">
+        <h3>Combate por Tercer Puesto 🥉</h3>
+        <p id="thirdPlaceCompetitors"></p>
+        <button id="startThirdPlace">Iniciar Combate</button>
+      </div>
+    </section>
+
+    <div id="podioFinal" class="podio hidden">
+      <h2>🏆 Podio Final</h2>
+      <div class="podio-places">
+        <div class="place second">🥈 <span id="secondPlace"></span></div>
+        <div class="place first">🥇 <span id="firstPlace"></span></div>
+        <div class="place third">🥉 <span id="thirdPlace"></span></div>
+      </div>
     </div>
 
-    <!-- Timer principal -->
-    <header>
-      <div id="mainTimer" class="neon">02:00</div>
-      <div class="timer-controls">
-        <button id="startMain">▶️</button>
-        <button id="pauseMain">⏸️</button>
-        <button id="resetMain">🔄</button>
-        <button id="toggleMain" class="led-toggle" title="Cambiar duración">⌁</button>
-      </div>
-      <div class="time-selector">
-        <select id="mainTimeSelect" title="Duración del combate">
-          <option value="90">1:30</option>
-          <option value="120" selected>2:00</option>
-          <option value="150">2:30</option>
-          <option value="180">3:00</option>
-        </select>
-      </div>
-      
-    </header>
+    <div id="championBanner" class="champion hidden">
+      <h1 id="championName"></h1>
+      <p>¡Es el nuevo campeón del torneo!</p>
+    </div>
 
-    <!-- Paneles rojo y azul con timer de descanso en el medio -->
-    <main>
-      <section class="scoreboard red">
-        <h2>Rojo</h2>
-        <div class="label">Puntos</div>
-        <div class="counter big">
-          <button class="up" data-target="redPoints">▲</button>
-          <div id="redPoints">0</div>
-          <button class="down" data-target="redPoints">▼</button>
-        </div>
-        <div class="bottom-row">
-          <div class="counter-group">
-            <div class="label">Faltas</div>
-            <div class="counter small">
-              <button class="up" data-target="redFouls">▲</button>
-              <div id="redFouls">0</div>
-              <button class="down" data-target="redFouls">▼</button>
-            </div>
-          </div>
-          <div class="counter-group">
-            <div class="label">Salidas</div>
-            <div class="counter small">
-              <button class="up" data-target="redExits">▲</button>
-              <div id="redExits">0</div>
-              <button class="down" data-target="redExits">▼</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="break-timer">
-        <div id="breakTimer" class="led">01:00</div>
-        <div class="timer-controls">
-          <button id="startBreak">▶️</button>
-          <button id="pauseBreak">⏸️</button>
-          <button id="resetBreak">🔄</button>
-        </div>
-      </section>
-
-      <section class="scoreboard blue">
-        <h2>Azul</h2>
-        <div class="label">Puntos</div>
-        <div class="counter big">
-          <button class="up" data-target="bluePoints">▲</button>
-          <div id="bluePoints">0</div>
-          <button class="down" data-target="bluePoints">▼</button>
-        </div>
-        <div class="bottom-row">
-          <div class="counter-group">
-            <div class="label">Faltas</div>
-            <div class="counter small">
-              <button class="up" data-target="blueFouls">▲</button>
-              <div id="blueFouls">0</div>
-              <button class="down" data-target="blueFouls">▼</button>
-            </div>
-          </div>
-          <div class="counter-group">
-            <div class="label">Salidas</div>
-            <div class="counter small">
-              <button class="up" data-target="blueExits">▲</button>
-              <div id="blueExits">0</div>
-              <button class="down" data-target="blueExits">▼</button>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- Firma del dojo -->
     <footer>
       <div class="watermark">Dojo Chronos - American Chaiu Do Kwan ARG</div>
       <img src="assets/firma.png" alt="Firma del dojo" class="watermark-img" />
     </footer>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script-organizacion.js"></script>
 </body>
 </html>
-
-
