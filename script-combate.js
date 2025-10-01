@@ -1,38 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Timer principal
   let mainTime = 120;
-  let mainInterval;
-  const mainTimer = document.getElementById('mainTimer');
+let mainInterval;
+const mainTimer = document.getElementById('mainTimer');
+const timeSelect = document.getElementById('mainTimeSelect');
 
-  function actualizarMainTimer() {
-    const min = String(Math.floor(mainTime / 60)).padStart(2, '0');
-    const sec = String(mainTime % 60).padStart(2, '0');
-    mainTimer.textContent = `${min}:${sec}`;
-  }
+function actualizarMainTimer() {
+  const min = String(Math.floor(mainTime / 60)).padStart(2, '0');
+  const sec = String(mainTime % 60).padStart(2, '0');
+  mainTimer.textContent = `${min}:${sec}`;
+}
 
-  document.getElementById('startMain').onclick = () => {
-    clearInterval(mainInterval);
-    mainInterval = setInterval(() => {
-      if (mainTime > 0) {
-        mainTime--;
-        actualizarMainTimer();
-      }
-    }, 1000);
-  };
-
-  document.getElementById('pauseMain').onclick = () => clearInterval(mainInterval);
-  document.getElementById('resetMain').onclick = () => {
-    clearInterval(mainInterval);
-    mainTime = parseInt(document.getElementById('mainTimeSelect').value);
-    actualizarMainTimer();
-  };
-
-  document.getElementById('toggleMain').onclick = () => {
-    mainTime = parseInt(document.getElementById('mainTimeSelect').value);
-    actualizarMainTimer();
-  };
-
+function aplicarDuracion() {
+  clearInterval(mainInterval);
+  mainTime = parseInt(timeSelect.value);
   actualizarMainTimer();
+}
+
+document.getElementById('toggleMain').addEventListener('click', aplicarDuracion);
+timeSelect.addEventListener('change', aplicarDuracion); // También aplica al cambiar directamente
+
+document.getElementById('startMain').onclick = () => {
+  clearInterval(mainInterval);
+  mainInterval = setInterval(() => {
+    if (mainTime > 0) {
+      mainTime--;
+      actualizarMainTimer();
+    }
+  }, 1000);
+};
+
+document.getElementById('pauseMain').onclick = () => clearInterval(mainInterval);
+document.getElementById('resetMain').onclick = () => aplicarDuracion();
+
+actualizarMainTimer();
 
   // Timer de descanso
   let breakTime = 60;
@@ -91,9 +92,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('nombreGanador').textContent = ganador;
   document.getElementById('ganadorPantalla').classList.remove('hidden');
+  lanzarConfeti();
 
   setTimeout(() => {
     document.getElementById('ganadorPantalla').classList.add('hidden');
-  }, 4000); // Oculta después de 4 segundos
+  }, 4000);
 });
 });
+function lanzarConfeti() {
+  const canvas = document.getElementById('confettiCanvas');
+  canvas.classList.remove('hidden');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const piezas = [];
+  const colores = ['#ff0', '#f00', '#0f0', '#0ff', '#f0f', '#fff'];
+
+  for (let i = 0; i < 150; i++) {
+    piezas.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      r: Math.random() * 6 + 4,
+      d: Math.random() * 10 + 5,
+      color: colores[Math.floor(Math.random() * colores.length)],
+      tilt: Math.random() * 10 - 5
+    });
+  }
+
+  let frame = 0;
+  const animar = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    piezas.forEach(p => {
+      ctx.beginPath();
+      ctx.fillStyle = p.color;
+      ctx.ellipse(p.x + p.tilt, p.y, p.r, p.r / 2, 0, 0, 2 * Math.PI);
+      ctx.fill();
+      p.y += p.d;
+      p.tilt = Math.sin(frame / 10 + p.x / 50) * 10;
+    });
+    frame++;
+    if (frame < 150) requestAnimationFrame(animar);
+    else canvas.classList.add('hidden');
+  };
+
+  animar();
+}

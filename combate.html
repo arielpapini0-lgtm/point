@@ -14,16 +14,15 @@
         <button id="startMain">▶️</button>
         <button id="pauseMain">⏸️</button>
         <button id="resetMain">🔄</button>
-        <button id="toggleMain" class="led-toggle" title="Cambiar duración">⌁</button>
-      </div>
       <div class="time-selector">
-        <select id="mainTimeSelect" title="Duración del combate">
-          <option value="90">1:30</option>
-          <option value="120" selected>2:00</option>
-          <option value="150">2:30</option>
-          <option value="180">3:00</option>
-        </select>
-      </div>
+  <select id="mainTimeSelect">
+    <option value="90">1:30</option>
+    <option value="120" selected>2:00</option>
+    <option value="150">2:30</option>
+    <option value="180">3:00</option>
+  </select>
+  <button id="toggleMain" title="Aplicar duración">⌁</button>
+</div>
     </header>
 
     <main>
@@ -100,6 +99,7 @@
   <div id="ganadorPantalla" class="pantalla-ganador hidden">
   <h1 id="nombreGanador"></h1>
   <p>¡Ganador del combate!</p>
+  <canvas id="confettiCanvas" class="confeti-pantalla hidden"></canvas>
 </div>
 </body>
 </html>
