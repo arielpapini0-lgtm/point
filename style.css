@@ -1,513 +1,243 @@
-body {
+/* === RESET Y BASE === */
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
   font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* === LAYOUT PRINCIPAL === */
+.pantalla-combate {
+  display: grid;
+  grid-template-areas:
+    "timer timer timer"
+    "rojo central azul"
+    "rojo central azul"
+    "extras extras extras"
+    "descanso descanso descanso"
+    "ganador ganador ganador";
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: auto 1fr auto auto auto auto;
+  gap: 20px;
+  padding: 20px;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* === TIMER PRINCIPAL === */
+.timer-principal {
+  grid-area: timer;
+  text-align: center;
+}
+
+.timer {
+  font-size: 8vw;
+  color: #fff;
+  text-shadow: 0 0 30px #0ff;
+  margin-bottom: 10px;
+  animation: zoomIn 0.5s ease-out;
+}
+
+@keyframes zoomIn {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* === CONTROLES DEL TIMER === */
+.timer-controles {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.timer-controles button,
+.timer-controles select {
+  font-size: 1.5em;
+  padding: 10px 20px;
+  background: #111;
+  color: #0ff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #0ff;
+  cursor: pointer;
+  animation: bounceIn 0.6s ease-out;
+}
+
+@keyframes bounceIn {
+  0% { opacity: 0; transform: translateX(-50px); }
+  60% { transform: translateX(10px); }
+  80% { transform: translateX(-5px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* === PANEL DE PUNTAJE === */
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: slideFade 0.6s ease-out;
+}
+
+@keyframes slideFade {
+  0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.panel.rojo { grid-area: rojo; }
+.panel.azul { grid-area: azul; }
+
+.puntaje {
+  font-size: 12vw;
+  font-weight: bold;
+  line-height: 1;
+  text-shadow: 0 0 40px #000;
+}
+
+.panel.rojo .puntaje {
+  color: #ff0040;
+  text-shadow: 0 0 40px #ff0040;
+}
+
+.panel.azul .puntaje {
+  color: #00bfff;
+  text-shadow: 0 0 40px #00bfff;
+}
+
+.botones {
+  margin-top: 10px;
+}
+
+.botones button {
+  font-size: 2em;
+  margin: 5px;
+  padding: 10px 20px;
   background: #111;
   color: #fff;
-}
-
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
-  text-align: center;
-  position: relative;
-}
-
-/* Botón minimalista para cambiar fondo */
-.bg-minimal {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 20;
-  animation: fadeIn 1s ease-out;
-}
-
-#bgUpload {
-  display: none;
-}
-
-.bg-minimal label {
-  font-size: 1.8em;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #0ff;
   cursor: pointer;
-  color: #00e5ff;
-  text-shadow: 0 0 5px #00e5ff, 0 0 10px #00e5ff;
-  transition: transform 0.3s ease, text-shadow 0.3s ease;
+  animation: bounceIn 0.6s ease-out;
 }
 
-.bg-minimal label:hover {
-  transform: scale(1.2);
-  text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff;
-}
-
-/* Timer principal */
-header {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-#mainTimer {
-  font-size: 4em;
-  font-weight: bold;
-  color: #00e5ff;
-  text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff;
-  margin-bottom: 10px;
-}
-
-.timer-controls {
+/* === FALTAS Y SALIDAS === */
+.extras {
+  grid-area: extras;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   flex-wrap: wrap;
-  gap: 10px;
   margin-top: 10px;
 }
 
-.timer-controls button {
+.dato {
+  text-align: center;
+  margin: 10px;
+}
+
+.etiqueta {
   font-size: 1.2em;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: #333;
-  color: #fff;
-  transition: background 0.2s ease;
+  display: block;
+  margin-bottom: 5px;
 }
 
-.timer-controls button:hover {
-  background-color: #555;
-}
-
-/* Timer de descanso */
-#breakTimer {
+.valor {
   font-size: 2.5em;
   font-weight: bold;
-  color: #ffeb3b;
-  text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffeb3b;
-  margin-bottom: 10px;
-}
-
-.break-timer {
-  width: 30%;
-  padding: 10px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 10px;
-  box-shadow: 0 0 10px #222;
-}
-
-/* Paneles rojo y azul */
-main {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 20px;
-}
-
-.scoreboard {
-  width: 30%;
-  padding: 15px;
-  border-radius: 10px;
-  background: rgba(0, 0, 0, 0.901);
-  box-shadow: 0 0 10px #000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.red {
-  border: 4px solid #f70000;
-}
-
-.blue {
-  border: 4px solid #005eff;
-}
-
-/* Marcadores */
-.counter {
-  margin: 10px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.counter.big div {
-  font-size: 4em;
-}
-
-.counter.small div {
-  font-size: 2em;
-}
-
-.counter button {
-  font-size: 1.5em;
-  margin: 3px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 6px;
-  background-color: #222;
-  color: #fff;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.counter button:hover {
-  transform: scale(1.1);
-  background-color: #444;
-}
-
-.counter div {
-  margin: 5px 0;
-}
-
-/* Etiquetas */
-.label {
-  font-size: 1em;
-  margin-bottom: 5px;
-  color: #ccc;
-}
-
-/* Faltas y salidas alineadas horizontalmente */
-.bottom-row {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 20px;
-}
-
-.counter-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 45%;
-}
-
-/* Firma del dojo */
-footer {
-  margin-top: 40px;
-  text-align: center;
-}
-
-.watermark {
-  font-size: 0.9em;
-  color: #888;
-  opacity: 0.6;
-  margin-bottom: 10px;
-}
-
-.watermark-img {
-  width: 150px;
-  opacity: 0.3;
-  display: block;
-  margin: 0 auto;
-}
-
-/* Animación de entrada */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Animación de impacto */
-.flash {
-  animation: flash 0.3s ease;
-}
-
-@keyframes flash {
-  0% { transform: scale(1); background-color: transparent; }
-  50% { transform: scale(1.1); background-color: rgba(255,255,255,0.2); }
-  100% { transform: scale(1); background-color: transparent; }
-}
-.led-toggle {
-  font-size: 1.5em;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  background-color: #111;
-  color: #00e5ff;
-  text-shadow: 0 0 5px #00e5ff, 0 0 10px #00e5ff;
-  cursor: pointer;
-  transition: transform 0.3s ease, text-shadow 0.3s ease;
-}
-
-.led-toggle:hover {
-  transform: scale(1.2);
-  text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff;
-}
-.time-selector {
-  margin-top: 10px;
-}
-
-#mainTimeSelect {
-  font-size: 1.2em;
-  padding: 6px 12px;
-  border-radius: 6px;
-  background-color: #111;
-  color: #00e5ff;
-  border: none;
-  text-shadow: 0 0 5px #00e5ff;
-  box-shadow: 0 0 10px #00e5ff20;
-  cursor: pointer;
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
-}
-
-#mainTimeSelect:hover {
-  box-shadow: 0 0 15px #00e5ff60;
-  transform: scale(1.05);
-}
-.torneo-section {
-  margin-top: 40px;
-  padding: 20px;
-  background: #f9f9f9;
-  border-top: 2px solid #ccc;
-  font-family: 'Orbitron', sans-serif;
-}
-
-.competitor-entry textarea {
-  width: 100%;
-  height: 120px;
-  font-size: 1rem;
-  margin-bottom: 10px;
-}
-
-/* Fondo general del torneo */
-.torneo-section {
-  margin-top: 40px;
-  padding: 20px;
-  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-  color: #eee;
-  border-top: 2px solid #444;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
-}
-
-/* Entrada de competidores */
-.torneo-section textarea {
-  width: 100%;
-  height: 100px;
-  font-size: 1rem;
-  margin-bottom: 10px;
-  padding: 10px;
-  resize: vertical;
-  background: #1c1c1c;
-  color: #eee;
-  border: 1px solid #555;
-  border-radius: 8px;
-}
-
-.torneo-section button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  background: #28a745;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-}
-
-.torneo-section button:hover {
-  background: #218838;
-}
-
-/* Bracket visual */
-.bracket-container {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  margin-top: 30px;
-  overflow-x: auto;
-  padding-bottom: 20px;
-}
-
-.bracket-round {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  position: relative;
-}
-
-.bracket-round h4 {
-  margin-bottom: 10px;
-  font-size: 1rem;
-  color: #ccc;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.bracket-match {
-  background: #1e1e1e;
-  color: #eee;
-  padding: 12px 16px;
-  border-radius: 10px;
-  font-weight: bold;
-  text-align: center;
-  min-width: 200px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
-  animation: fadeInUp 0.4s ease forwards;
-  opacity: 0;
+  justify-content: center;
 }
 
-/* Iconos en cada match */
-.bracket-match::before {
-  content: "⚔️";
-  font-size: 1.2rem;
+.neon-rojo {
+  color: #ff0040;
+  text-shadow: 0 0 10px #ff0040;
 }
 
-/* Animación de entrada */
-@keyframes fadeInUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.neon-azul {
+  color: #00bfff;
+  text-shadow: 0 0 10px #00bfff;
 }
 
-/* Colores por ronda */
-.bracket-round:nth-child(1) .bracket-match { background: #2c3e50; }
-.bracket-round:nth-child(2) .bracket-match { background: #34495e; }
-.bracket-round:nth-child(3) .bracket-match { background: #3b5998; }
-.bracket-round:nth-child(4) .bracket-match { background: #8e44ad; }
-
-/* Iconos en podio */
-.place.first::before { content: "🥇 "; }
-.place.second::before { content: "🥈 "; }
-.place.third::before { content: "🥉 "; }
-
-.third-place {
-  margin-top: 30px;
-  padding: 15px;
-  background: #ffe;
-  border: 2px dashed #999;
+.valor button {
+  font-size: 1.5em;
+  padding: 5px 15px;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 0 8px #0ff;
+  cursor: pointer;
 }
 
-.hidden {
-  display: none;
-}
-.winner-button {
+/* === TIMER DE DESCANSO === */
+.timer-descanso {
+  grid-area: descanso;
   text-align: center;
-  margin: 20px 0;
+}
+
+.timer.descanso {
+  font-size: 4vw;
+  color: #0f0;
+  text-shadow: 0 0 20px #0f0;
+  margin-bottom: 10px;
+}
+
+/* === BOTÓN DE GANADOR === */
+.winner-button {
+  grid-area: ganador;
+  text-align: center;
 }
 
 .winner-button button {
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
-  color: white;
+  font-size: 1.5em;
+  padding: 10px 30px;
+  background: #0f0;
+  color: #000;
   border: none;
-  padding: 12px 24px;
-  font-size: 1.2rem;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  transition: transform 0.2s ease;
-}
-
-.winner-button button:hover {
-  transform: scale(1.05);
-}
-.champion {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, #ffd700 0%, #ff8c00 100%);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2rem;
-  z-index: 9999;
-  animation: fadeIn 1s ease forwards;
-}
-
-.champion.hidden {
-  display: none;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.8); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.podio {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: linear-gradient(to bottom, #fffbe6, #ffeaa7);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.5rem;
-  z-index: 9999;
-  animation: fadeIn 1s ease forwards;
-}
-
-.podio.hidden {
-  display: none;
-}
-
-.podio-places {
-  display: flex;
-  gap: 40px;
-  margin-top: 20px;
-}
-
-.place {
-  background: #fff;
-  padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  text-align: center;
-  font-size: 1.2rem;
+  box-shadow: 0 0 20px #0f0;
+  cursor: pointer;
 }
-.champion {
+
+/* === PANTALLA DE GANADOR === */
+.pantalla-ganador {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: radial-gradient(circle, #ffd700 0%, #ff8c00 100%);
-  color: #fff;
+  background: black;
+  color: gold;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2rem;
+  font-size: 4em;
   z-index: 9999;
-  animation: fadeIn 1s ease forwards;
+  text-align: center;
+  animation: championReveal 1s ease-out;
 }
 
-.champion.hidden {
+@keyframes championReveal {
+  0% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+.pantalla-ganador.hidden {
   display: none;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.8); }
-  to { opacity: 1; transform: scale(1); }
-}
-.bracket-match {
-  animation: fadeInUp 0.4s ease forwards;
-  opacity: 0;
+.confeti-pantalla {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 9998;
 }
 
-@keyframes fadeInUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
+/* === EFECTO DE IMPACTO === */
 .flash {
   animation: flashPoint 0.5s ease-in-out;
 }
@@ -516,320 +246,46 @@ footer {
   0% { background-color: yellow; color: black; }
   100% { background-color: inherit; color: inherit; }
 }
-.competitor-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
-  font-family: 'Orbitron', sans-serif;
-}
 
-.competitor-form input,
-.competitor-form select {
-  padding: 10px;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: none;
-  background: #111;
-  color: #00e5ff;
-  box-shadow: 0 0 10px #00e5ff40;
-  text-shadow: 0 0 5px #00e5ff;
+/* === RESPONSIVE CELULAR === */
+@media screen and (max-width: 768px) {
+  .puntaje { font-size: 20vw; }
+  .timer { font-size: 12vw; }
+  .timer.descanso { font-size: 8vw; }
+  .valor { font-size: 2em; }
+  .timer-controles button,
+  .valor button,
+  .botones button {
+    font-size: 1.2em;
+    padding: 8px 16px;
+  }
 }
-
-.competitor-form button,
-#generarGrupos {
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 1rem;
+.nombre {
+  font-size: 2.5em;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 10px 20px;
   border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 10px #000;
+  text-shadow: 0 0 5px #fff;
+  animation: fadeInUp 0.6s ease-out;
 }
 
-#tabla {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'Orbitron', sans-serif;
-  margin-bottom: 20px;
+.panel.rojo .nombre {
+  color: #ff0040;
+  text-shadow: 0 0 10px #ff0040;
+  border: 2px solid #ff0040;
 }
 
-#tabla th,
-#tabla td {
-  border: 1px solid #444;
-  padding: 8px;
-  text-align: center;
-  background: #1c1c1c;
-  color: #eee;
-}
-.pantalla-ganador {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: black;
-  color: gold;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 4em;
-  z-index: 9999;
-  text-align: center;
+.panel.azul .nombre {
+  color: #00bfff;
+  text-shadow: 0 0 10px #00bfff;
+  border: 2px solid #00bfff;
 }
 
-.pantalla-ganador.hidden {
-  display: none;
-}
-.confeti-pantalla {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9998;
-}
-
-.pantalla-ganador {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: black;
-  color: gold;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 4em;
-  z-index: 9999;
-  text-align: center;
-}
-
-.pantalla-ganador.hidden {
-  display: none;
-}
-@media screen and (max-width: 768px) {
-  body {
-    font-size: 16px;
-    padding: 0;
-    margin: 0;
-  }
-
-  .container {
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-  }
-
-  header, main {
-    width: 100%;
-    padding: 0;
-  }
-
-  .scoreboard {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .counter.big, .counter.small {
-    flex-direction: row;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .counter button {
-    font-size: 1.5em;
-    padding: 10px;
-  }
-
-  .timer-controls button,
-  .winner-button button {
-    font-size: 1.2em;
-    padding: 10px 20px;
-    margin: 5px;
-  }
-
-  .time-selector {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-  }
-
-  #mainTimer, #breakTimer {
-    font-size: 3em;
-    margin-bottom: 10px;
-  }
-
-  .pantalla-ganador {
-    font-size: 2.5em;
-    padding: 20px;
-  }
-}
-button {
-  touch-action: manipulation;
-  min-width: 48px;
-  min-height: 48px;
-}
-@media screen and (max-width: 768px) {
-  body {
-    margin: 0;
-    padding: 0;
-    font-size: 16px;
-    background-color: black;
-    overflow-x: hidden;
-  }
-
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-  }
-
-  header {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-
-  #mainTimer {
-    font-size: 3em;
-    margin: 10px 0;
-  }
-
-  .timer-controls button,
-  .winner-button button {
-    font-size: 1.5em;
-    padding: 10px 20px;
-    margin: 5px;
-  }
-
-  main {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    width: 100%;
-    flex-wrap: nowrap;
-    gap: 10px;
-  }
-
-  .scoreboard {
-    flex: 1;
-    padding: 10px;
-    min-width: 45%;
-  }
-
-  .break-timer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-width: 10%;
-    padding: 10px;
-  }
-
-  .counter.big, .counter.small {
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .counter button {
-    font-size: 1.5em;
-    padding: 10px;
-    min-width: 48px;
-  }
-
-  .label {
-    font-size: 1.2em;
-    margin-bottom: 5px;
-  }
-
-  .pantalla-ganador {
-    font-size: 2.5em;
-    padding: 20px;
-  }
-
-  .confeti-pantalla {
-    width: 100vw;
-    height: 100vh;
-  }
-}
-@media screen and (max-width: 768px) {
-  html, body {
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  .container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  header {
-    flex: 0 0 auto;
-    text-align: center;
-    padding: 5px;
-  }
-
-  #mainTimer {
-    font-size: 2.5em;
-  }
-
-  main {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: stretch;
-    padding: 5px;
-    gap: 5px;
-  }
-
-  .scoreboard, .break-timer {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    padding: 5px;
-    box-sizing: border-box;
-  }
-
-  .counter.big, .counter.small {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .counter button {
-    font-size: 1.5em;
-    padding: 10px;
-  }
-
-  .label {
-    font-size: 1em;
-  }
-
-  .winner-button button {
-    font-size: 1.2em;
-    padding: 10px 20px;
-  }
-
-  .time-selector {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-  }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }

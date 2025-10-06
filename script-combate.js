@@ -1,39 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Cargar nombres desde la planilla
+  const combate = JSON.parse(localStorage.getItem('combateActual'));
+  if (combate) {
+    document.getElementById('nombreRojo').textContent = combate.rojo;
+    document.getElementById('nombreAzul').textContent = combate.azul;
+  }
+
   // Timer principal
   let mainTime = 120;
-let mainInterval;
-const mainTimer = document.getElementById('mainTimer');
-const timeSelect = document.getElementById('mainTimeSelect');
+  let mainInterval;
+  const mainTimer = document.getElementById('mainTimer');
+  const timeSelect = document.getElementById('mainTimeSelect');
 
-function actualizarMainTimer() {
-  const min = String(Math.floor(mainTime / 60)).padStart(2, '0');
-  const sec = String(mainTime % 60).padStart(2, '0');
-  mainTimer.textContent = `${min}:${sec}`;
-}
+  function actualizarMainTimer() {
+    const min = String(Math.floor(mainTime / 60)).padStart(2, '0');
+    const sec = String(mainTime % 60).padStart(2, '0');
+    mainTimer.textContent = `${min}:${sec}`;
+  }
 
-function aplicarDuracion() {
-  clearInterval(mainInterval);
-  mainTime = parseInt(timeSelect.value);
+  function aplicarDuracion() {
+    clearInterval(mainInterval);
+    mainTime = parseInt(timeSelect.value);
+    actualizarMainTimer();
+  }
+
+  document.getElementById('toggleMain').addEventListener('click', aplicarDuracion);
+  timeSelect.addEventListener('change', aplicarDuracion);
+
+  document.getElementById('startMain').onclick = () => {
+    clearInterval(mainInterval);
+    const sonidoInicio = document.getElementById('sonidoInicio');
+    if (sonidoInicio) sonidoInicio.play();
+
+    mainInterval = setInterval(() => {
+      if (mainTime > 0) {
+        mainTime--;
+        actualizarMainTimer();
+        if (mainTime === 0) {
+          clearInterval(mainInterval);
+          const sonidoTiempo = document.getElementById('sonidoTiempo');
+          if (sonidoTiempo) sonidoTiempo.play();
+        }
+      }
+    }, 1000);
+  };
+
+  document.getElementById('pauseMain').onclick = () => clearInterval(mainInterval);
+  document.getElementById('resetMain').onclick = () => aplicarDuracion();
   actualizarMainTimer();
-}
-
-document.getElementById('toggleMain').addEventListener('click', aplicarDuracion);
-timeSelect.addEventListener('change', aplicarDuracion); // También aplica al cambiar directamente
-
-document.getElementById('startMain').onclick = () => {
-  clearInterval(mainInterval);
-  mainInterval = setInterval(() => {
-    if (mainTime > 0) {
-      mainTime--;
-      actualizarMainTimer();
-    }
-  }, 1000);
-};
-
-document.getElementById('pauseMain').onclick = () => clearInterval(mainInterval);
-document.getElementById('resetMain').onclick = () => aplicarDuracion();
-
-actualizarMainTimer();
 
   // Timer de descanso
   let breakTime = 60;
@@ -52,6 +66,11 @@ actualizarMainTimer();
       if (breakTime > 0) {
         breakTime--;
         actualizarBreakTimer();
+        if (breakTime === 0) {
+          clearInterval(breakInterval);
+          const sonidoDescanso = document.getElementById('sonidoDescanso') || document.getElementById('sonidoTiempo');
+          if (sonidoDescanso) sonidoDescanso.play();
+        }
       }
     }, 1000);
   };
@@ -70,6 +89,8 @@ actualizarMainTimer();
     btn.addEventListener('click', () => {
       const target = document.getElementById(btn.dataset.target);
       target.textContent = parseInt(target.textContent) + 1;
+      const sonidoPunto = document.getElementById('sonidoPunto');
+      if (sonidoPunto) sonidoPunto.play();
     });
   });
 
@@ -83,22 +104,24 @@ actualizarMainTimer();
 
   // Registrar ganador
   document.getElementById('declareWinner').addEventListener('click', () => {
-  const rojo = parseInt(document.getElementById('redPoints').textContent);
-  const azul = parseInt(document.getElementById('bluePoints').textContent);
-  let ganador = 'Empate';
+    const rojo = parseInt(document.getElementById('redPoints').textContent);
+    const azul = parseInt(document.getElementById('bluePoints').textContent);
+    let ganador = 'Empate';
 
-  if (rojo > azul) ganador = 'Rojo';
-  else if (azul > rojo) ganador = 'Azul';
+if (rojo > azul) ganador = combate.rojo;
+else if (azul > rojo) ganador = combate.azul;
 
-  document.getElementById('nombreGanador').textContent = ganador;
-  document.getElementById('ganadorPantalla').classList.remove('hidden');
-  lanzarConfeti();
+document.getElementById('nombreGanador').textContent = ganador;
+    document.getElementById('ganadorPantalla').classList.remove('hidden');
+    lanzarConfeti();
 
-  setTimeout(() => {
-    document.getElementById('ganadorPantalla').classList.add('hidden');
-  }, 4000);
+    setTimeout(() => {
+      document.getElementById('ganadorPantalla').classList.add('hidden');
+    }, 4000);
+  });
 });
-});
+
+// 🎉 Animación de confeti
 function lanzarConfeti() {
   const canvas = document.getElementById('confettiCanvas');
   canvas.classList.remove('hidden');

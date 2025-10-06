@@ -1,0 +1,200 @@
+/* === PLANILLA VISUAL PRO === */
+body {
+  background: radial-gradient(circle at top, #0f0f0f, #000);
+  color: #eee;
+  font-family: 'Orbitron', 'Segoe UI', sans-serif;
+  padding: 20px;
+}
+
+h1, h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #00f2ff;
+  text-shadow: 0 0 10px #00f2ff80;
+}
+
+.bracket-container {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  align-items: center;
+}
+
+.grupo-bracket {
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+  border-left: 4px solid #00f2ff;
+  background: rgba(0,0,0,0.6);
+  border-radius: 12px;
+  box-shadow: 0 0 20px #00f2ff40;
+  animation: fadeIn 1s ease-out;
+}
+
+.bracket-round {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: relative;
+  padding-left: 30px;
+  border-left: 2px dashed #555;
+}
+
+.bracket-round::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #00f2ff, transparent);
+  animation: pulseLine 2s infinite;
+}
+
+.bracket-round h4 {
+  font-size: 1.2em;
+  color: #ccc;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Tarjeta enfrentada */
+.matchup-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1a1a1a;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 242, 255, 0.3);
+  padding: 20px;
+  animation: fadeInUp 0.6s ease-in-out;
+}
+
+.competitor {
+  width: 40%;
+  text-align: center;
+  padding: 12px;
+  background: #2a2a2a;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  font-size: 1.1em;
+  color: #fff;
+}
+
+.competitor.left {
+  border-color: #00f2ff;
+}
+
+.competitor.right {
+  border-color: #ff0055;
+}
+
+.competitor h4 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.competitor .dojo {
+  font-size: 0.9em;
+  color: #ccc;
+}
+
+.vs {
+  width: 20%;
+  text-align: center;
+  font-size: 2em;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Podio */
+.podio {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.podio-places {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.place {
+  background: linear-gradient(to bottom, #222, #111);
+  color: #eee;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 10px #00f2ff40;
+  width: 120px;
+  font-size: 1.1em;
+  transition: transform 0.3s ease;
+}
+
+.place:hover {
+  transform: scale(1.05);
+}
+
+.place.first::before { content: "🥇 "; color: gold; }
+.place.second::before { content: "🥈 "; color: silver; }
+.place.third::before { content: "🥉 "; color: #cd7f32; }
+
+/* Campeón */
+.champion {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle, #ffd700 0%, #ff8c00 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  z-index: 9999;
+  animation: fadeIn 1s ease forwards;
+}
+
+.champion.hidden {
+  display: none;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulseLine {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
+/* Marca de agua */
+footer {
+  position: relative;
+  margin-top: 40px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #888;
+  opacity: 0.6;
+}
+
+.watermark-img {
+  width: 80px;
+  opacity: 0.15;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}

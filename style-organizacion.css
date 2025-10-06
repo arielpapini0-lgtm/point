@@ -1,0 +1,120 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #111;
+  color: #fff;
+  padding: 20px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  padding: 10px 20px;
+  font-size: 1em;
+  background: #222;
+  color: #00e5ff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00e5ff40;
+}
+
+.torneo-section {
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  margin-bottom: 30px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #00e5ff;
+  text-shadow: 0 0 10px #00e5ff80;
+}
+
+.competitor-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.competitor-form input,
+.competitor-form select {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  background: #1c1c1c;
+  color: #00e5ff;
+  box-shadow: 0 0 10px #00e5ff40;
+  text-shadow: 0 0 5px #00e5ff;
+}
+
+.competitor-form button {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+#tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+#tabla th,
+#tabla td {
+  border: 1px solid #444;
+  padding: 8px;
+  text-align: center;
+  background: #1c1c1c;
+  color: #eee;
+}
+
+#sortearLlave {
+  display: block;
+  margin: 0 auto;
+  padding: 12px 24px;
+  font-size: 1rem;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+#sortearLlave:hover {
+  background: #218838;
+}
+
+/* Marca de agua discreta */
+footer {
+  position: relative;
+  margin-top: 40px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #888;
+  opacity: 0.6;
+}
+
+.watermark-img {
+  width: 80px;
+  opacity: 0.15;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}

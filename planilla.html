@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planilla del Torneo</title>
+  <link rel="stylesheet" href="style-planilla.css" />
+</head>
+<body>
+  <h1>📊 Llaves del Torneo</h1>
+  <div id="bracketDisplay" class="bracket-container"></div>
+
+  <section id="podioFinal" class="podio hidden">
+    <h2>🏆 Podio Final</h2>
+    <div class="podio-places">
+      <div class="place second">🥈 <span id="secondPlace"></span></div>
+      <div class="place first">🥇 <span id="firstPlace"></span></div>
+      <div class="place third">🥉 <span id="thirdPlace"></span></div>
+    </div>
+  </section>
+
+  <div id="championBanner" class="champion hidden">
+    <h1 id="championName"></h1>
+    <p>¡Es el nuevo campeón del torneo!</p>
+  </div>
+
+  <footer>
+    <div class="watermark">Dojo Chronos - American Chaiu Do Kwan ARG</div>
+    <img src="assets/firma.png" alt="Firma del dojo" class="watermark-img" />
+  </footer>
+
+  <script src="script-planilla.js"></script>
+</body>
+</html>

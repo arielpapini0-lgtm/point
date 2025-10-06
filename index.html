@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dojo Chronos</title>
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style-organizacion.css" />
 </head>
 <body>
   <div class="tabs">
     <button onclick="mostrarSeccion('organizacion')">📋 Organización</button>
     <button onclick="window.open('combate.html', '_blank')">⚔️ Combate</button>
-    <button onclick="document.documentElement.requestFullscreen()">🖥️ Pantalla Completa</button>
+    <button onclick="window.open('planilla.html', '_blank')">📊 Ver Planilla</button>
   </div>
 
   <div id="organizacion" class="seccion">
@@ -48,36 +48,14 @@
 
         <table id="tabla">
           <thead>
-            <tr><th>Nombre</th><th>Escuela</th><th>Edad</th><th>Categoria</th><th>Peso</th></tr>
+            <tr><th>Nombre</th><th>Escuela</th><th>Edad</th><th>Técnica</th><th>Peso</th></tr>
           </thead>
           <tbody></tbody>
         </table>
 
         <button id="sortearLlave" style="display:none;">🎲 Sortear y Generar Llave</button>
       </section>
-
-      <div id="bracketDisplay" class="bracket-container"></div>
-
-      <div id="thirdPlaceMatch" class="third-place hidden">
-        <h3>Combate por Tercer Puesto 🥉</h3>
-        <p id="thirdPlaceCompetitors"></p>
-        <button id="startThirdPlace">Iniciar Combate</button>
-      </div>
     </section>
-
-    <div id="podioFinal" class="podio hidden">
-      <h2>🏆 Podio Final</h2>
-      <div class="podio-places">
-        <div class="place second">🥈 <span id="secondPlace"></span></div>
-        <div class="place first">🥇 <span id="firstPlace"></span></div>
-        <div class="place third">🥉 <span id="thirdPlace"></span></div>
-      </div>
-    </div>
-
-    <div id="championBanner" class="champion hidden">
-      <h1 id="championName"></h1>
-      <p>¡Es el nuevo campeón del torneo!</p>
-    </div>
 
     <footer>
       <div class="watermark">Dojo Chronos - American Chaiu Do Kwan ARG</div>

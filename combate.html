@@ -7,100 +7,112 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <button onclick="document.documentElement.requestFullscreen()">🖥️ Pantalla Completa</button>
   <div class="container">
-    <header>
-      <div id="mainTimer" class="neon">02:00</div>
-      <div class="timer-controls">
-        <button id="startMain">▶️</button>
-        <button id="pauseMain">⏸️</button>
-        <button id="resetMain">🔄</button>
-      <div class="time-selector">
-  <select id="mainTimeSelect">
-    <option value="90">1:30</option>
-    <option value="120" selected>2:00</option>
-    <option value="150">2:30</option>
-    <option value="180">3:00</option>
-  </select>
-  <button id="toggleMain" title="Aplicar duración">⌁</button>
-</div>
-    </header>
-
-    <main>
-      <section class="scoreboard red">
-        <h2>Rojo</h2>
-        <div class="label">Puntos</div>
-        <div class="counter big">
-          <button class="up" data-target="redPoints">▲</button>
-          <div id="redPoints">0</div>
-          <button class="down" data-target="redPoints">▼</button>
+    <main class="pantalla-combate">
+      <!-- Timer Principal -->
+      <section class="timer-principal">
+        <div id="mainTimer" class="timer">02:00</div>
+        <div class="timer-controles">
+          <button id="startMain">▶️</button>
+          <button id="pauseMain">⏸️</button>
+          <button id="resetMain">🔄</button>
+          <select id="mainTimeSelect">
+            <option value="90">1:30</option>
+            <option value="120" selected>2:00</option>
+            <option value="150">2:30</option>
+            <option value="180">3:00</option>
+          </select>
+          <button id="toggleMain">⌁</button>
         </div>
-        <div class="bottom-row">
-          <div class="counter-group">
-            <div class="label">Faltas</div>
-            <div class="counter small">
-              <button class="up" data-target="redFouls">▲</button>
-              <div id="redFouls">0</div>
-              <button class="down" data-target="redFouls">▼</button>
+      </section>
+
+      <!-- Panel Rojo -->
+      <section class="panel rojo">
+        <div class="nombre" id="nombreRojo">Rojo</div>
+        <div class="puntaje-container">
+          <div id="redPoints" class="puntaje">0</div>
+          <div class="botones">
+            <button class="up" data-target="redPoints">+</button>
+            <button class="down" data-target="redPoints">−</button>
+          </div>
+        </div>
+        <div class="extras">
+          <div class="dato neon-rojo">
+            <span class="etiqueta">Faltas</span>
+            <div class="valor">
+              <button class="up" data-target="redFouls">+</button>
+              <span id="redFouls">0</span>
+              <button class="down" data-target="redFouls">−</button>
             </div>
           </div>
-          <div class="counter-group">
-            <div class="label">Salidas</div>
-            <div class="counter small">
-              <button class="up" data-target="redExits">▲</button>
-              <div id="redExits">0</div>
-              <button class="down" data-target="redExits">▼</button>
+          <div class="dato neon-rojo">
+            <span class="etiqueta">Salidas</span>
+            <div class="valor">
+              <button class="up" data-target="redExits">+</button>
+              <span id="redExits">0</span>
+              <button class="down" data-target="redExits">−</button>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="break-timer">
-        <div id="breakTimer" class="led">01:00</div>
-        <div class="timer-controls">
+      <!-- Panel Azul -->
+      <section class="panel azul">
+        <div class="nombre" id="nombreAzul">Azul</div>
+        <div class="puntaje-container">
+          <div id="bluePoints" class="puntaje">0</div>
+          <div class="botones">
+            <button class="up" data-target="bluePoints">+</button>
+            <button class="down" data-target="bluePoints">−</button>
+          </div>
+        </div>
+        <div class="extras">
+          <div class="dato neon-azul">
+            <span class="etiqueta">Faltas</span>
+            <div class="valor">
+              <button class="up" data-target="blueFouls">+</button>
+              <span id="blueFouls">0</span>
+              <button class="down" data-target="blueFouls">−</button>
+            </div>
+          </div>
+          <div class="dato neon-azul">
+            <span class="etiqueta">Salidas</span>
+            <div class="valor">
+              <button class="up" data-target="blueExits">+</button>
+              <span id="blueExits">0</span>
+              <button class="down" data-target="blueExits">−</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Timer de descanso -->
+      <section class="timer-descanso">
+        <div id="breakTimer" class="timer descanso">01:00</div>
+        <div class="timer-controles">
           <button id="startBreak">▶️</button>
           <button id="pauseBreak">⏸️</button>
           <button id="resetBreak">🔄</button>
         </div>
-        <div class="winner-button">
-          <button id="declareWinner">🏅 Registrar Ganador</button>
-        </div>
       </section>
 
-      <section class="scoreboard blue">
-        <h2>Azul</h2>
-        <div class="label">Puntos</div>
-        <div class="counter big">
-          <button class="up" data-target="bluePoints">▲</button>
-          <div id="bluePoints">0</div>
-          <button class="down" data-target="bluePoints">▼</button>
-        </div>
-        <div class="bottom-row">
-          <div class="counter-group">
-            <div class="label">Faltas</div>
-            <div class="counter small">
-              <button class="up" data-target="blueFouls">▲</button>
-              <div id="blueFouls">0</div>
-              <button class="down" data-target="blueFouls">▼</button>
-            </div>
-          </div>
-          <div class="counter-group">
-            <div class="label">Salidas</div>
-            <div class="counter small">
-              <button class="up" data-target="blueExits">▲</button>
-              <div id="blueExits">0</div>
-              <button class="down" data-target="blueExits">▼</button>
-            </div>
-          </div>
-        </div>
+      <!-- Botón de ganador -->
+      <section class="winner-button">
+        <button id="declareWinner">🏅 Registrar Ganador</button>
       </section>
     </main>
   </div>
+
   <script src="script-combate.js"></script>
+
   <div id="ganadorPantalla" class="pantalla-ganador hidden">
-  <h1 id="nombreGanador"></h1>
-  <p>¡Ganador del combate!</p>
-  <canvas id="confettiCanvas" class="confeti-pantalla hidden"></canvas>
-</div>
+    <h1 id="nombreGanador"></h1>
+    <p>¡Ganador del combate!</p>
+    <canvas id="confettiCanvas" class="confeti-pantalla hidden"></canvas>
+  </div>
+
+  <audio id="sonidoInicio" src="assets/start.mp3" preload="auto"></audio>
+  <audio id="sonidoPunto" src="assets/hit.mp3" preload="auto"></audio>
+  <audio id="sonidoTiempo" src="assets/end.mp3" preload="auto"></audio>
 </body>
 </html>

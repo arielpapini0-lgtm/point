@@ -21,38 +21,44 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('sortearLlave').addEventListener('click', () => {
-    const grupos = agruparPorPeso(competidores);
-    const container = document.getElementById('bracketDisplay');
-    container.innerHTML = '';
+  const grupos = agruparPorPeso(competidores);
+  const container = document.getElementById('bracketDisplay');
+  container.innerHTML = '';
 
-    Object.entries(grupos).forEach(([peso, grupo]) => {
-      const nombres = grupo.map(c => c.nombre);
-      const mezclados = nombres.sort(() => Math.random() - 0.5);
+  const llaves = [];
 
-      const rondaInicial = [];
-      for (let i = 0; i < mezclados.length; i += 2) {
-        const a = mezclados[i];
-        const b = mezclados[i + 1] || 'BYE';
-        rondaInicial.push(`${a} vs ${b}`);
-      }
+  Object.entries(grupos).forEach(([peso, grupo]) => {
+    const nombres = grupo.map(c => c.nombre);
+    const mezclados = nombres.sort(() => Math.random() - 0.5);
 
-      const rounds = [rondaInicial];
-      let siguiente = Array(Math.ceil(rondaInicial.length / 2)).fill('Pendiente vs Pendiente');
+    const rondaInicial = [];
+    for (let i = 0; i < mezclados.length; i += 2) {
+      const a = mezclados[i];
+      const b = mezclados[i + 1] || 'BYE';
+      rondaInicial.push(`${a} vs ${b}`);
+    }
+
+    const rounds = [rondaInicial];
+    let siguiente = Array(Math.ceil(rondaInicial.length / 2)).fill('Pendiente vs Pendiente');
+    rounds.push(siguiente);
+
+    while (siguiente.length > 1) {
+      siguiente = Array(Math.ceil(siguiente.length / 2)).fill('Pendiente vs Pendiente');
       rounds.push(siguiente);
+    }
 
-      while (siguiente.length > 1) {
-        siguiente = Array(Math.ceil(siguiente.length / 2)).fill('Pendiente vs Pendiente');
-        rounds.push(siguiente);
-      }
+    const torneo = {
+      nombre: `Categoría ${peso} kg`,
+      rounds
+    };
 
-      const torneo = {
-        nombre: `Categoría ${peso} kg`,
-        rounds
-      };
-
-      renderBracketPorGrupo(torneo, container);
-    });
+    llaves.push(torneo);
+    renderBracketPorGrupo(torneo, container);
   });
+
+  // ✅ Guardamos las llaves para que planilla.html las pueda leer
+  localStorage.setItem('llavesTorneo', JSON.stringify(llaves));
+});
 
   function agruparPorPeso(lista) {
     const grupos = {};
@@ -76,7 +82,14 @@ document.addEventListener('DOMContentLoaded', () => {
       round.forEach((match, j) => {
         const matchDiv = document.createElement('div');
         matchDiv.className = 'bracket-match';
-        matchDiv.textContent = match;
+        const [a, b] = match.split(' vs ');
+matchDiv.innerHTML = `
+  <div class="matchup-card">
+    <div class="competitor left">${a}</div>
+    <div class="vs">VS</div>
+    <div class="competitor right">${b}</div>
+  </div>
+`;
         roundDiv.appendChild(matchDiv);
       });
       grupoDiv.appendChild(roundDiv);
@@ -85,3 +98,35 @@ document.addEventListener('DOMContentLoaded', () => {
     container.appendChild(grupoDiv);
   }
 });
+localStorage.setItem('competidores', JSON.stringify(competidores));
+const llaves = [];
+
+Object.entries(grupos).forEach(([peso, grupo]) => {
+  const nombres = grupo.map(c => c.nombre);
+  const mezclados = nombres.sort(() => Math.random() - 0.5);
+
+  const rondaInicial = [];
+  for (let i = 0; i < mezclados.length; i += 2) {
+    const a = mezclados[i];
+    const b = mezclados[i + 1] || 'BYE';
+    rondaInicial.push(`${a} vs ${b}`);
+  }
+
+  const rounds = [rondaInicial];
+  let siguiente = Array(Math.ceil(rondaInicial.length / 2)).fill('Pendiente vs Pendiente');
+  rounds.push(siguiente);
+
+  while (siguiente.length > 1) {
+    siguiente = Array(Math.ceil(siguiente.length / 2)).fill('Pendiente vs Pendiente');
+    rounds.push(siguiente);
+  }
+
+  const torneo = {
+    nombre: `Categoría ${peso} kg`,
+    rounds
+  };
+
+  llaves.push(torneo);
+  renderBracketPorGrupo(torneo, container);
+});
+
